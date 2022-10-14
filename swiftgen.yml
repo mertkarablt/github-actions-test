@@ -1,0 +1,23 @@
+strings:
+  inputs: github-actions-test/SupportingFiles/Resources/Strings/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: github-actions-test/SupportingFiles/Resources/Strings/L10n.swift
+
+colors:
+  inputs: github-actions-test/SupportingFiles/Resources/Colors/Colors.json
+  outputs:
+    templateName: swift5
+    output: github-actions-test/SupportingFiles/Resources/Colors/Colors.swift
+
+fonts:
+  inputs: github-actions-test/SupportingFiles/Resources/Fonts/Files
+  outputs:
+    templateName: swift5
+    output: github-actions-test/SupportingFiles/Resources/Fonts/Fonts.swift
+
+xcassets:
+  inputs: github-actions-test/SupportingFiles/Resources/Assets
+  outputs:
+    - templateName: swift5
+      output: github-actions-test/SupportingFiles/Resources/Assets/Assets.swift

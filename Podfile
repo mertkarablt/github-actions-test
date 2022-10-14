@@ -36,7 +36,7 @@ target 'github-actions-test' do
   # Pods for github-actions-test
 
   pod 'SwiftLint'
-  pod 'FLEX', :configurations => ['Debug']
+  pod 'FLEX', :configurations => ['Dev', 'Beta']
   pod 'SwiftGen'
 
   pod 'Firebase/Analytics'

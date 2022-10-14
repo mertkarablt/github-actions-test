@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>services</key>
+	<array>
+		<dict>
+			<key>environments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<string>test</string>
+					<key>name</key>
+					<string>test</string>
+					<key>value</key>
+					<string>8t42oi3m5</string>
+				</dict>
+				<dict>
+					<key>id</key>
+					<string>prod</string>
+					<key>name</key>
+					<string>prod</string>
+					<key>value</key>
+					<string>dbmk89vnr</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>base_service_env</string>
+			<key>name</key>
+			<string>Service Environment</string>
+		</dict>
+		<dict>
+			<key>environments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<string>test</string>
+					<key>name</key>
+					<string>test</string>
+					<key>value</key>
+					<string>mp_test</string>
+				</dict>
+				<dict>
+					<key>id</key>
+					<string>uat</string>
+					<key>name</key>
+					<string>uat</string>
+					<key>value</key>
+					<string>mp_uat</string>
+				</dict>
+				<dict>
+					<key>id</key>
+					<string>prod</string>
+					<key>name</key>
+					<string>prod</string>
+					<key>value</key>
+					<string>mp_prod</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>kapida_env_mp</string>
+			<key>name</key>
+			<string>MasterPass Environment</string>
+		</dict>
+		<dict>
+			<key>environments</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<string>test</string>
+					<key>name</key>
+					<string>test</string>
+					<key>value</key>
+					<string>persona_test</string>
+				</dict>
+				<dict>
+					<key>id</key>
+					<string>prod</string>
+					<key>name</key>
+					<string>prod</string>
+					<key>value</key>
+					<string>persona_prod</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>kapida_env_persona</string>
+			<key>name</key>
+			<string>PersonaClick Environment</string>
+		</dict>
+	</array>
+</dict>
+</plist>
