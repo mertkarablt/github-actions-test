@@ -73,3 +73,19 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+      - name: Build
+        env:
+          workspace: "github-actions-test.xcworkspace"
+          scheme: "github-actions-test"
+          destination: "generic/platform=iOS"
+          archivePath: "Archive/github-actions-test.xcarchive"
+          configuration: "Beta"
+        run: |
+          xcodebuild \
+          -showBuildTimingSummary \
+          -workspace "$workspace" \
+          -scheme "$scheme" \
+          -configuration "$configuration" \
+          -archivePath "$archivePath" \
+          -destination "$destination" \
+          clean archive
