@@ -20,7 +20,7 @@ jobs:
           path: |
             Pods
             # ~/Library/Caches/CocoaPods
-            # ~/.cocoapods
+            ~/.cocoapods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
