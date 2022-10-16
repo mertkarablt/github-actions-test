@@ -1,6 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '13.0'
-source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
 
 # Disables the usage of input/output files,
 # because its broken in the new build system: https://openradar.appspot.com/41126633.
