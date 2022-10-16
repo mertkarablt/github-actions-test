@@ -25,7 +25,8 @@ jobs:
           ruby-version: 2.7.2
           bundler-cache: true
       - name: Bundle Install
-        run: bundle install
+        run: |
+          bundle install
       - name: Cache
         uses: actions/cache@v3
         with: 
