@@ -22,6 +22,6 @@ jobs:
     - name: CocoaPod Install
       run: pod install
     - name: Xcode Select
-    - uses: maxim-lobanov/setup-xcode@v1
+      uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: '14.0.1'
