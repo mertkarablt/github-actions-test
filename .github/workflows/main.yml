@@ -1,4 +1,4 @@
-name: iOS Starter Workflow
+name: iOS starter workflow
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/cache@v3.0.11
+    - uses: actions/cache@v3
       with: 
         path: Pods
         key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -21,3 +21,14 @@ jobs:
           ${{ runner.os }}-pods-
     - name: CocoaPod Install
       run: pod install
+    - name: Build
+      steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.0.1'
+      env:
+        workspace: "github-actions-test.xcworkspace"
+        scheme: "github-actions-test"
+        destination: "generic/platform=iOS"
+        configuration: "Beta"
+      run: xcodebuild -showBuildTimingSummary -workspace "$workspace" -scheme "$scheme" -configuration "$configuration" -destination "$destination"
