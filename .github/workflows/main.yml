@@ -26,6 +26,7 @@ jobs:
           bundler-cache: true
       - name: Bundle Install
         run: |
+          echo BUNDLE_GEMFILE=foo/Gemfile >> $GITHUB_ENV
           bundle install
       - name: Cache
         uses: actions/cache@v3
