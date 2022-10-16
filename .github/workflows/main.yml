@@ -23,12 +23,5 @@ jobs:
       run: pod install
     - name: Xcode Select
     - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '14.0.1'
-      
-      env:
-        workspace: "github-actions-test.xcworkspace"
-        scheme: "github-actions-test"
-        destination: "generic/platform=iOS"
-        configuration: "Beta"
-      run: xcodebuild -showBuildTimingSummary -workspace "$workspace" -scheme "$scheme" -configuration "$configuration" -destination "$destination"
+      with:
+        xcode-version: '14.0.1'
