@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "31A2C02A28F956CC00FFB0E1"
-               BuildableName = "github-actions-test.app"
+               BuildableName = "Actions.app"
                BlueprintName = "github-actions-test"
                ReferencedContainer = "container:github-actions-test.xcodeproj">
             </BuildableReference>
@@ -67,7 +67,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "31A2C02A28F956CC00FFB0E1"
-            BuildableName = "github-actions-test.app"
+            BuildableName = "Actions.app"
             BlueprintName = "github-actions-test"
             ReferencedContainer = "container:github-actions-test.xcodeproj">
          </BuildableReference>
@@ -84,7 +84,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "31A2C02A28F956CC00FFB0E1"
-            BuildableName = "github-actions-test.app"
+            BuildableName = "Actions.app"
             BlueprintName = "github-actions-test"
             ReferencedContainer = "container:github-actions-test.xcodeproj">
          </BuildableReference>

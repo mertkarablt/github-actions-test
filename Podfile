@@ -13,16 +13,12 @@ post_install do |installer|
     '$(FRAMEWORK_SEARCH_PATHS)'
     ]
   end
-
+  
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |build_conf|
       build_conf.build_settings['CODE_SIGN_IDENTITY'] = ""
-      if build_conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] == '8.0'
-        build_conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
-      end
-      if build_conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] == '8.2'
-        build_conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
-      end
+      build_conf.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      build_conf.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = '$(inherited)'
     end
   end
 end

@@ -68,16 +68,6 @@ extension AppDelegate {
 
     @objc
     private func didThreeFingersSwipe() {
-        let idfa = TrackingAuthorization.idfa
-        let activityViewController = UIActivityViewController(
-            activityItems: [idfa],
-            applicationActivities: nil
-        )
-        UIApplication.topViewController()?.present(
-            activityViewController,
-            animated: true,
-            completion: nil
-        )
     }
 
     @objc
