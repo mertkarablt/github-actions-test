@@ -129,16 +129,19 @@ jobs:
           ls
 
       - name: App Center Distribution
-        uses: wzieba/AppCenter-Github-Action@v1
+        uses: erawhctim/action-appcenter-cli@v1.0.2
         env:
           appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
           group: "Testers"
         with:
-          appName: "${appcenterProject}"
+          command: |
+            appcenter distribute release --quiet --disable-telemetry  \
+            --app "$appcenterProject"  \
+            --file "$ipaFile"  \
+            --group "$group"
+            # --build-version $c_version_number  \
+            # --build-number $c_build_number  \
+            # --release-notes-file "${c_ipa_path}/ReleaseNotes.txt"  \
           token: ${{secrets.APP_CENTER_TOKEN}}
-          group: "${group}"
-          file: "${ipaFile}"
-          notifyTesters: true
-          debug: false
 
 
