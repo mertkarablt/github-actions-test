@@ -60,20 +60,32 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-      - name: Build
-        env:
-          workspace: "github-actions-test.xcworkspace"
-          scheme: "github-actions-test"
-          destination: "generic/platform=iOS"
-          archivePath: "Archive/github-actions-test.xcarchive"
-          configuration: "Beta"
-        run: |
-          mkdir Archive
-          xcodebuild \
-          -showBuildTimingSummary \
-          -workspace "$workspace" \
-          -scheme "$scheme" \
-          -configuration "$configuration" \
-          -archivePath "$archivePath" \
-          -destination "$destination" \
-          clean archive
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+          with:
+            xcode-version: latest-stable
+      # - name: Build
+      #   env:
+      #     workspace: "github-actions-test.xcworkspace"
+      #     scheme: "github-actions-test"
+      #     destination: "generic/platform=iOS"
+      #     archivePath: "Archive/github-actions-test.xcarchive"
+      #     ipaPath: "Archive/ipa"
+      #     configuration: "Beta"
+      #     exportOptions: ""
+      #   run: |
+      #     xcodebuild \
+      #     -showBuildTimingSummary \
+      #     -workspace "$workspace" \
+      #     -scheme "$scheme" \
+      #     -configuration "$configuration" \
+      #     -archivePath "$archivePath" \
+      #     -destination "$destination" \
+      #     clean archive
+
+      #     exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
+
+      #     xcodebuild -exportArchive \
+      #     -archivePath "$archivePath"\
+      #     -exportPath "$ipaPath" \
+      #     -exportOptionsPlist "$exportOptions"
