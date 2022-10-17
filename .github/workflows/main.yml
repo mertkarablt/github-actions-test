@@ -83,9 +83,10 @@ jobs:
           -destination "$destination" \
           clean archive
 
-      #     exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
+          exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
+          echo $exportOptions
 
-      #     xcodebuild -exportArchive \
-      #     -archivePath "$archivePath"\
-      #     -exportPath "$ipaPath" \
-      #     -exportOptionsPlist "$exportOptions"
+          xcodebuild -exportArchive \
+          -archivePath "$archivePath"\
+          -exportPath "$ipaPath" \
+          -exportOptionsPlist "$exportOptions"
