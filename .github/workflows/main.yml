@@ -72,31 +72,23 @@ jobs:
           archivePath: "Archive/github-actions-test.xcarchive"
           ipaPath: "Archive/ipa"
           configuration: "Beta"
-          exportOptions: ""
         run: |
           xcodebuild \
-          -showBuildTimingSummary \
+          -quiet -showBuildTimingSummary \
           -workspace "$workspace" \
           -scheme "$scheme" \
           -configuration "$configuration" \
           -archivePath "$archivePath" \
           -destination "$destination" \
           clean archive
-
-          exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
-          echo $exportOptions
-
-          xcodebuild -exportArchive \
-          -archivePath "$archivePath" \
-          -exportPath "$ipaPath" \
-          -exportOptionsPlist "$exportOptions"
       - name: Export
         env:
           archivePath: "Archive/github-actions-test.xcarchive"
           ipaPath: "Archive/ipa"
           configuration: "Beta"
-          exportOptions: "github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
+          exportOptions: ""
         run: |
+          exportOptions=github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist
           xcodebuild -exportArchive \
           -archivePath "$archivePath" \
           -exportPath "$ipaPath" \
