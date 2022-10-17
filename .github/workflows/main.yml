@@ -88,8 +88,13 @@ jobs:
           configuration: "Beta"
           exportOptions: ""
         run: |
-          exportOptions=github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist
+          exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
+          
           xcodebuild -exportArchive \
           -archivePath "$archivePath" \
           -exportPath "$ipaPath" \
           -exportOptionsPlist "$exportOptions"
+
+          ls Archive
+          ls Archive/ipa
+
