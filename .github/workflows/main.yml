@@ -134,10 +134,10 @@ jobs:
           appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
           group: "Testers"
         with:
-          appName: ${{appcenterProject}}
+          appName: "${appcenterProject}"
           token: ${{secrets.APP_CENTER_TOKEN}}
-          group: ${{group}}
-          file: ${{ipaFile}}
+          group: "${group}"
+          file: "${ipaFile}"
           notifyTesters: true
           debug: false
 
