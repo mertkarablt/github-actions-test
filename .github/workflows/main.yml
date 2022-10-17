@@ -62,8 +62,8 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
-          with:
-            xcode-version: latest-stable
+        with:
+          xcode-version: latest-stable
       # - name: Build
       #   env:
       #     workspace: "github-actions-test.xcworkspace"
