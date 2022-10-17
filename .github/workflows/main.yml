@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: iOS Distribution
+    name: Build & Export
     runs-on: macos-12
     env:
       workspace: "github-actions-test.xcworkspace"
@@ -18,11 +18,11 @@ jobs:
       ipaPath: "Archive/ipa"
       configuration: "Beta"
       exportOptions: ""
-      ipaFile: ""
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Cache
         uses: actions/cache@v3
         with: 
@@ -33,14 +33,17 @@ jobs:
           key: ${{ runner.os }}-cocoapods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-cocoapods-
+
       - name: CocoaPod Install
         run: |
           pod install
+
       # - name: Clean up keychain and provisioning profile
       #   if: ${{ always() }}
       #   run: |
       #     security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
       #     rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+      
       - name: Install the Apple certificate and provisioning profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -69,18 +72,13 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
+
       - name: Archive
-        # env:
-        #   workspace: "github-actions-test.xcworkspace"
-        #   scheme: "github-actions-test"
-        #   destination: "generic/platform=iOS"
-        #   archivePath: "Archive/github-actions-test.xcarchive"
-        #   ipaPath: "Archive/ipa"
-        #   configuration: "Beta"
         run: |
           xcodebuild \
           -quiet -showBuildTimingSummary \
@@ -90,12 +88,8 @@ jobs:
           -archivePath "$archivePath" \
           -destination "$destination" \
           clean archive
+
       - name: Export
-        # env:
-        #   archivePath: "Archive/github-actions-test.xcarchive"
-        #   ipaPath: "Archive/ipa"
-        #   configuration: "Beta"
-        #   exportOptions: ""
         run: |
           exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
 
@@ -103,28 +97,46 @@ jobs:
           -archivePath "$archivePath" \
           -exportPath "$ipaPath" \
           -exportOptionsPlist "$exportOptions"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+          name: artifact
+          path: |
+            Archive
+            Pods
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    name: Distribution
+    env:
+      ipaFile: ""
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+
       - name: Find IPA File Name
         run: |
           ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
-          
-          echo $exportOptions
-          echo $ipaFile
+          ls
+
       - name: App Center Distribution
-        uses: avocaddo/AppCenter-Github-Action@v1.0.2
+        uses: wzieba/AppCenter-Github-Action@v1
         env:
           appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
           group: "Testers"
         with:
-          command: |
-            appcenter distribute release --quiet --disable-telemetry  \
-            --app $c_appcenter_project  \
-            --file "$ipaFile"  \
-            --group "$group"
-            # --build-version $c_version_number  \
-            # --build-number $c_build_number  \
-            # --release-notes-file "${c_ipa_path}/ReleaseNotes.txt"  \
+          appName: ${{appcenterProject}}
           token: ${{secrets.APP_CENTER_TOKEN}}
+          group: ${{group}}
+          file: ${{ipaFile}}
+          notifyTesters: true
+          debug: false
 
 
