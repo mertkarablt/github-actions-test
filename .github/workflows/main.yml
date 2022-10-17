@@ -21,9 +21,9 @@ jobs:
             Pods
             # ~/Library/Caches/CocoaPods
             # ~/.cocoapods
-          key: ${{ runner.os }}-Pods-${{ hashFiles('**/Podfile.lock') }}
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pods-
+            ${{ runner.os }}-cocoapods-
       - name: CocoaPod Install
         run: |
           pod install
