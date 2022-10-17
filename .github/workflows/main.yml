@@ -128,9 +128,7 @@ jobs:
           group: "Testers"
         with:
           command: |
-            ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)" && \
-            ipaName=$(basename "$ipaFullPath") && \
-            ipaFile="${ipaPath}/${ipaName}" && \
+            ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)" && ipaName=$(basename "$ipaFullPath") && ipaFile="${ipaPath}/${ipaName}" && 
             appcenter distribute release --quiet --disable-telemetry  \
             --app "$appcenterProject"  \
             --file "$ipaFile"  \
