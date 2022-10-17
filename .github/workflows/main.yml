@@ -109,6 +109,11 @@ jobs:
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
       - name: App Center Distribution
+      run: |
+          echo $appcenterProject
+          echo $group
+          echo $ipaFile
+          echo $exportOptions
         uses: wzieba/AppCenter-Github-Action@v1
         env:
           appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
