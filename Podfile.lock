@@ -164,7 +164,7 @@ DEPENDENCIES:
   - SwiftLint
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - DeepLinkKit
     - Firebase
@@ -218,6 +218,6 @@ SPEC CHECKSUMS:
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
-PODFILE CHECKSUM: e23ccbcff3d4d47f5c8924c8a4c8ee9033454503
+PODFILE CHECKSUM: d5fc04fe03fd2a88e7dfcad5902c08e9ab3c909e
 
 COCOAPODS: 1.11.3

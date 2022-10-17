@@ -2,6 +2,11 @@
 platform :ios, '13.0'
 source 'https://cdn.cocoapods.org'
 
+# Comment the next line if you don't want to use dynamic frameworks
+use_frameworks!
+
+inhibit_all_warnings!
+
 # Disables the usage of input/output files,
 # because its broken in the new build system: https://openradar.appspot.com/41126633.
 install! 'cocoapods', :disable_input_output_paths => true
@@ -26,8 +31,6 @@ end
 project 'github-actions-test.xcodeproj'
 
 target 'github-actions-test' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
 
   # Pods for github-actions-test
 
