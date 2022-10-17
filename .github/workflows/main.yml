@@ -109,8 +109,8 @@ jobs:
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
           
-          echo ${{ exportOptions }}
-          echo ${{ ipaFile }}
+          echo $exportOptions
+          echo $ipaFile
       - name: App Center Distribution
         uses: avocaddo/AppCenter-Github-Action@v1.0.2
         env:
