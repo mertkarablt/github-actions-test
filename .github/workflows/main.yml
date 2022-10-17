@@ -17,7 +17,7 @@ jobs:
       archivePath: "Archive/github-actions-test.xcarchive"
       ipaPath: "Archive/ipa"
       configuration: "Beta"
-      exportOptions: ""
+      exportOptions: "github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${{configuration}}.plist"
       ipaFile: ""
 
     steps:
@@ -48,14 +48,20 @@ jobs:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
+          echo $exportOptions
+
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          DEV_CERTIFICATE_PATH=$RUNNER_TEMP/dev_build_certificate.p12
+          DEV_PP_PATH=$RUNNER_TEMP/dev_build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$BUILD_DEV_CERTIFICATE_BASE64" | base64 --decode --output $DEV_CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+          echo -n "$BUILD_DEV_PROVISION_PROFILE_BASE64" | base64 --decode --output $DEV_PP_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
@@ -64,11 +70,13 @@ jobs:
 
           # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $DEV_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $DEV_PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
@@ -108,18 +116,20 @@ jobs:
           ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
-          echo $ipaFile
       - name: App Center Distribution
-        uses: wzieba/AppCenter-Github-Action@v1
+        uses: joabalea/App-Center-action@v1.0.2
         env:
           appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
           group: "Testers"
         with:
-          appName: "$appcenterProject"
+          command: |
+            appcenter distribute release --quiet --disable-telemetry  \
+            --app $c_appcenter_project  \
+            --file "$ipaFile"  \
+            --group "$group"
+            # --build-version $c_version_number  \
+            # --build-number $c_build_number  \
+            # --release-notes-file "${c_ipa_path}/ReleaseNotes.txt"  \
           token: ${{secrets.APP_CENTER_TOKEN}}
-          group: "$group"
-          file: "$ipaFile"
-          notifyTesters: true
-          debug: false
 
 
