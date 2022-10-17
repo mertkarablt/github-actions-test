@@ -126,7 +126,21 @@ jobs:
           ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
-          ls
+          ls Archive
+          ls Archive/ipa
+
+      - name: Names
+        env:
+          appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
+          group: "Testers"
+        run: |
+          ls Archive
+          ls Archive/ipa
+
+          echo "ipaFile: ${ipaFile}"
+          echo "appcenterProject: ${appcenterProject}"
+          echo "group: ${group}"
+
 
       - name: App Center Distribution
         uses: erawhctim/action-appcenter-cli@v1.0.2
@@ -139,9 +153,6 @@ jobs:
             --app "$appcenterProject"  \
             --file "$ipaFile"  \
             --group "$group"
-            # --build-version $c_version_number  \
-            # --build-number $c_build_number  \
-            # --release-notes-file "${c_ipa_path}/ReleaseNotes.txt"  \
           token: ${{secrets.APP_CENTER_TOKEN}}
 
       - name: Delete Artifacts
