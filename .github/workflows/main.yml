@@ -121,27 +121,6 @@ jobs:
         with:
           name: artifact
 
-      - name: Find IPA File Name
-        run: |
-          ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
-          ipaName=$(basename "$ipaFullPath")
-          ipaFile="${ipaPath}/${ipaName}"
-          ls Archive
-          ls Archive/ipa
-
-      - name: Names
-        env:
-          appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
-          group: "Testers"
-        run: |
-          ls Archive
-          ls Archive/ipa
-
-          echo "ipaFile: ${ipaFile}"
-          echo "appcenterProject: ${appcenterProject}"
-          echo "group: ${group}"
-
-
       - name: App Center Distribution
         uses: erawhctim/action-appcenter-cli@v1.0.2
         env:
@@ -149,6 +128,9 @@ jobs:
           group: "Testers"
         with:
           command: |
+            ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)" && \
+            ipaName=$(basename "$ipaFullPath") && \
+            ipaFile="${ipaPath}/${ipaName}" && \
             appcenter distribute release --quiet --disable-telemetry  \
             --app "$appcenterProject"  \
             --file "$ipaFile"  \
