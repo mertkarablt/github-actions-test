@@ -10,6 +10,15 @@ jobs:
   build:
     name: iOS Distribution
     runs-on: macos-12
+    env:
+      workspace: "github-actions-test.xcworkspace"
+      scheme: "github-actions-test"
+      destination: "generic/platform=iOS"
+      archivePath: "Archive/github-actions-test.xcarchive"
+      ipaPath: "Archive/ipa"
+      configuration: "Beta"
+      exportOptions: ""
+      ipaFile: ""
 
     steps:
       - name: Checkout
@@ -65,13 +74,13 @@ jobs:
         with:
           xcode-version: latest-stable
       - name: Archive
-        env:
-          workspace: "github-actions-test.xcworkspace"
-          scheme: "github-actions-test"
-          destination: "generic/platform=iOS"
-          archivePath: "Archive/github-actions-test.xcarchive"
-          ipaPath: "Archive/ipa"
-          configuration: "Beta"
+        # env:
+        #   workspace: "github-actions-test.xcworkspace"
+        #   scheme: "github-actions-test"
+        #   destination: "generic/platform=iOS"
+        #   archivePath: "Archive/github-actions-test.xcarchive"
+        #   ipaPath: "Archive/ipa"
+        #   configuration: "Beta"
         run: |
           xcodebuild \
           -quiet -showBuildTimingSummary \
@@ -82,11 +91,11 @@ jobs:
           -destination "$destination" \
           clean archive
       - name: Export
-        env:
-          archivePath: "Archive/github-actions-test.xcarchive"
-          ipaPath: "Archive/ipa"
-          configuration: "Beta"
-          exportOptions: ""
+        # env:
+        #   archivePath: "Archive/github-actions-test.xcarchive"
+        #   ipaPath: "Archive/ipa"
+        #   configuration: "Beta"
+        #   exportOptions: ""
         run: |
           exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
           
@@ -94,7 +103,22 @@ jobs:
           -archivePath "$archivePath" \
           -exportPath "$ipaPath" \
           -exportOptionsPlist "$exportOptions"
+      - name: Find IPA File Name
+        run: |
+          ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
+          ipaName=$(basename "$ipaFullPath")
+          ipaFile="${ipaPath}/${ipaName}"
+      - name: App Center Distribution
+        uses: wzieba/AppCenter-Github-Action@v1
+        env:
+          appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
+          group: "Testers"
+        with:
+          appName: "$appcenterProject"
+          token: ${{secrets.APP_CENTER_TOKEN}}
+          group: "$group"
+          file: "$ipaFile"
+          notifyTesters: true
+          debug: false
 
-          ls Archive
-          ls Archive/ipa
 
