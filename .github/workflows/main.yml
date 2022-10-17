@@ -17,7 +17,7 @@ jobs:
       archivePath: "Archive/github-actions-test.xcarchive"
       ipaPath: "Archive/ipa"
       configuration: "Beta"
-      exportOptions: "github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${{configuration}}.plist"
+      exportOptions: ""
       ipaFile: ""
 
     steps:
@@ -48,6 +48,7 @@ jobs:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
+          echo ${{ env.exportOptions }}
           echo $exportOptions
 
           # create variables
@@ -106,6 +107,10 @@ jobs:
         #   exportOptions: ""
         run: |
           exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
+          echo ${{ env.exportOptions }}
+          echo $exportOptions
+          env.exportOptions="$exportOptions"
+          echo ${{ env.exportOptions }}
           
           xcodebuild -exportArchive \
           -archivePath "$archivePath" \
@@ -116,6 +121,8 @@ jobs:
           ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
+          env.ipaFile="$ipaFile"
+          echo ${{ env.ipaFile }}
       - name: App Center Distribution
         uses: joabalea/App-Center-action@v1.0.2
         env:
