@@ -144,4 +144,9 @@ jobs:
             # --release-notes-file "${c_ipa_path}/ReleaseNotes.txt"  \
           token: ${{secrets.APP_CENTER_TOKEN}}
 
+      - name: Delete Artifacts
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: artifact
+
 
