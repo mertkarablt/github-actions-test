@@ -48,9 +48,6 @@ jobs:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          echo ${{ env.exportOptions }}
-          echo $exportOptions
-
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
@@ -101,10 +98,6 @@ jobs:
         #   exportOptions: ""
         run: |
           exportOptions="github-actions-test/SupportingFiles/Files/Config/ExportOptions/ExportOptions_${configuration}.plist"
-          echo ${{ env.exportOptions }}
-          echo $exportOptions
-          env.exportOptions="$exportOptions"
-          echo ${{ env.exportOptions }}
 
           xcodebuild -exportArchive \
           -archivePath "$archivePath" \
@@ -115,8 +108,9 @@ jobs:
           ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${ipaPath}/${ipaName}"
-          env.ipaFile="$ipaFile"
-          echo ${{ env.ipaFile }}
+          
+          echo ${{ exportOptions }}
+          echo ${{ ipaFile }}
       - name: App Center Distribution
         uses: avocaddo/AppCenter-Github-Action@v1.0.2
         env:
