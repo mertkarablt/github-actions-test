@@ -105,7 +105,7 @@ jobs:
 
           for file in Archive/ipa/*.ipa; do
             echo "$file"
-            # mv -- "$file" "$(basename -- "actions" .ipa).ipa"
+            mv -- "$file" Archive/ipa/actions.ipa
           done
 
       - name: Upload Artifacts
