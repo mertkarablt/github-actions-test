@@ -127,7 +127,7 @@ jobs:
           ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
           ipaName=$(basename "$ipaFullPath")
           ipaFile="${{ github.event.inputs.ipaFile }}"
-          ipaFile="${{ipaPath}}/${{ipaName}}"
+          ipaFile="${{github.event.inputs.ipaPath}}/${{ipaName}}"
 
           echo "ipaFile=${ipaFile}" >> $GITHUB_ENV
 
