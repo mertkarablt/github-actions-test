@@ -111,6 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Distribution
     env:
+      ipaPath: "Archive/ipa"
       ipaFile: ""
     steps:
       - name: Checkout
@@ -141,7 +142,6 @@ jobs:
           echo "ipaFile: ${ipaFile}"
           echo "appcenterProject: ${appcenterProject}"
           echo "group: ${group}"
-          echo "env ipafile: ${{ github.event.inputs.ipaFile }}"
 
 
       - name: App Center Distribution
