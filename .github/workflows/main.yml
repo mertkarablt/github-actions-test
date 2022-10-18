@@ -103,7 +103,7 @@ jobs:
           # ipa_name=$(basename "$ipa_full_path")
           # ipa_file="${c_ipa_path}/${ipa_name}"
 
-          for file in *.ipa; do
+          for file in Archive/ipa/*.ipa; do
             echo "$file"
             # mv -- "$file" "$(basename -- "actions" .ipa).ipa"
           done
