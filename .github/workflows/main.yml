@@ -16,7 +16,7 @@ jobs:
       destination: "generic/platform=iOS"
       archivePath: "Archive/github-actions-test.xcarchive"
       ipaPath: "Archive/ipa"
-      fullIpaPath: "Archive/IPA/actions.ipa"
+      fullIpaPath: "Archive/ipa/actions.ipa"
       configuration: "Beta"
       exportOptions: ""
 
@@ -99,14 +99,13 @@ jobs:
           -exportPath "$ipaPath" \
           -exportOptionsPlist "$exportOptions"
 
-          ipa_full_path="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
-          ipa_name=$(basename "$ipa_full_path")
-          ipa_file="${c_ipa_path}/${ipa_name}"
+          # ipa_full_path="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
+          # ipa_name=$(basename "$ipa_full_path")
+          # ipa_file="${c_ipa_path}/${ipa_name}"
 
-          cp -rf $ipa_file $fullIpaPath
-          mv ${ipaPath}/ Archive/IPA
-
-          rm "$ipaPath"
+          for file in *.ipa; do
+            mv -- "$file" "$(basename -- "actions" .ipa).ipa"
+          done
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -121,7 +120,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Distribution
     env:
-      fullIpaPath: "Archive/IPA/actions.ipa"
+      fullIpaPath: "Archive/ipa/actions.ipa"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
