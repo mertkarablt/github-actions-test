@@ -99,7 +99,16 @@ jobs:
           -exportPath "$ipaPath" \
           -exportOptionsPlist "$exportOptions"
 
-          cp -v $ipaPath $fullIpaPath
+          ipa_full_path="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
+          ipa_name=$(basename "$ipa_full_path")
+          ipa_file="${c_ipa_path}/${ipa_name}"
+
+          cp -v $ipa_file $fullIpaPath
+
+          if [ -f "$ipa_file" ] ; then
+              rm "$ipa_file"
+              echo original file deleted
+          fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
