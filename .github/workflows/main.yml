@@ -103,7 +103,7 @@ jobs:
           ipa_name=$(basename "$ipa_full_path")
           ipa_file="${c_ipa_path}/${ipa_name}"
 
-          cp -v $ipa_file $fullIpaPath
+          cp $ipa_file $fullIpaPath
 
           if [ -f "$ipa_file" ] ; then
               rm "$ipa_file"
