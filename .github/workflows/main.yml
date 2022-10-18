@@ -16,7 +16,7 @@ jobs:
       destination: "generic/platform=iOS"
       archivePath: "Archive/github-actions-test.xcarchive"
       ipaPath: "Archive/ipa"
-      fullIpaPath: "Archive/ipa/actions.ipa"
+      fullIpaPath: "Archive/IPA/actions.ipa"
       configuration: "Beta"
       exportOptions: ""
 
@@ -103,12 +103,10 @@ jobs:
           ipa_name=$(basename "$ipa_full_path")
           ipa_file="${c_ipa_path}/${ipa_name}"
 
-          cp $ipa_file $fullIpaPath
+          cp -rf $ipa_file $fullIpaPath
+          mv ${ipaPath}/ Archive/IPA
 
-          if [ -f "$ipa_file" ] ; then
-              rm "$ipa_file"
-              echo original file deleted
-          fi
+          rm "$ipaPath"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -123,8 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Distribution
     env:
-      ipaPath: "Archive/ipa"
-      fullIpaPath: "Archive/ipa/actions.ipa"
+      fullIpaPath: "Archive/IPA/actions.ipa"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
