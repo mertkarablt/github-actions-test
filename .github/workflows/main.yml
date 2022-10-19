@@ -100,11 +100,8 @@ jobs:
           -exportOptionsPlist "$exportOptions"
 
           for file in Archive/ipa/*.ipa; do
-            echo "$file"
             mv -- "$file" Archive/ipa/actions.ipa
           done
-
-          ls Archive/ipa
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -129,29 +126,6 @@ jobs:
         with:
           name: artifact
 
-      # - name: Find IPA File Name
-      #   run: |
-      #     ipaName=""
-      #     ipaFullPath=""
-      #     ipaFullPath="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
-      #     ipaName=$(basename "${{ ipaFullPath }}")
-      #     ipaFile="${{ github.event.inputs.ipaFile }}"
-      #     ipaFile="${{ github.event.inputs.ipaPath }}/${{ ipaName }}"
-
-      #     echo "ipaFile=${ipaFile}" >> $GITHUB_ENV
-
-      # - name: Names
-      #   env:
-      #     appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
-      #     group: "Testers"
-      #   run: |
-      #     ls Archive
-      #     ls Archive/ipa
-
-      #     echo "ipaFile: ${ipaFile}"
-      #     echo "appcenterProject: ${appcenterProject}"
-      #     echo "group: ${group}"
-
       - name: App Center Distribution
         uses: erawhctim/action-appcenter-cli@v1.0.2
         env:
@@ -159,10 +133,7 @@ jobs:
           group: "Testers"
         with:
           command: |
-            appcenter distribute release --quiet --disable-telemetry \
-            --app "$appcenterProject" \
-            --file "$fullIpaPath" \
-            --group "$group"
+            appcenter distribute release --quiet --disable-telemetry --app "$appcenterProject" --file "$fullIpaPath" --group "$group"
           token: ${{secrets.APP_CENTER_TOKEN}}
 
       - name: Delete Artifacts
