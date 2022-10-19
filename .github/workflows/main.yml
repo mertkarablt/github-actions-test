@@ -99,14 +99,12 @@ jobs:
           -exportPath "$ipaPath" \
           -exportOptionsPlist "$exportOptions"
 
-          # ipa_full_path="$(find . -type f -iname "*.ipa" -exec ls "{}" +;)"
-          # ipa_name=$(basename "$ipa_full_path")
-          # ipa_file="${c_ipa_path}/${ipa_name}"
-
           for file in Archive/ipa/*.ipa; do
             echo "$file"
             mv -- "$file" Archive/ipa/actions.ipa
           done
+
+          ls Archive/ipa
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
