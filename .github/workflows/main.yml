@@ -126,13 +126,9 @@ jobs:
 
       - name: App Center Distribution
         uses: erawhctim/action-appcenter-cli@v1.0.2
-        env:
-          appcenterProject: "a101-kapida/A101-Kapida-iOS-Beta"
-          group: "Testers"
-          fullIpaPath: "Archive/ipa/actions.ipa"
         with:
           command: |
-            appcenter distribute release --quiet --disable-telemetry --app ${{appcenterProject}} --file ${{fullIpaPath}} --group ${{group}}
+            appcenter distribute release --quiet --disable-telemetry --app "a101-kapida/A101-Kapida-iOS-Beta" --file "Archive/ipa/actions.ipa" --group "Testers"
           token: ${{secrets.APP_CENTER_TOKEN}}
 
       - name: Delete Artifacts
