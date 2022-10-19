@@ -159,9 +159,9 @@ jobs:
           group: "Testers"
         with:
           command: |
-            appcenter distribute release --quiet --disable-telemetry  \
-            --app "$appcenterProject"  \
-            --file "$fullIpaPath"  \
+            appcenter distribute release --quiet --disable-telemetry \
+            --app "$appcenterProject" \
+            --file "$fullIpaPath" \
             --group "$group"
           token: ${{secrets.APP_CENTER_TOKEN}}
 
